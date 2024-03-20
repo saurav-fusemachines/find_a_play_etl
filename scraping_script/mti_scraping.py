@@ -7,8 +7,6 @@ import json
 import csv
 import os
 
-hello
-
 def scrape_and_compare(url1, url2):
     df1 = pd.read_csv(url1)
     try:
@@ -52,7 +50,7 @@ def scrape_and_compare(url1, url2):
         try:
             raw_data = scrape_data_for_urls(remaining_urls)
             print("trying to append the data to test csv")
-            raw_data.to_csv(f"{dir}mti_raw_data.csv", index=False, header = True)
+            raw_data.to_csv(f"{dir}mti_raw_data.csv", mode='a', index=False, header = False)
             print("data appended to test csv")
             remaining_urls.to_csv(url1, mode='a', index=False, header=False)
             return remaining_urls
@@ -449,7 +447,7 @@ def create_csv_if_not_exist(csv_file, header):
 def start_mti():
     
     global dir
-    dir = r'/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/mti/'
+    dir = r'data/raw_data/mti/'
     directory = os.path.dirname(dir)
 
     if not os.path.exists(directory):
