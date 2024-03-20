@@ -1,0 +1,18 @@
+24/03/19 18:05:02 WARN Utils: Your hostname, FM-PC-LT-342 resolves to a loopback address: 127.0.1.1; using 192.168.1.18 instead (on interface wlp0s20f3)
+24/03/19 18:05:02 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/03/19 18:05:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/03/19 18:05:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+24/03/19 18:05:04 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+Directory exists: True
+No new URLs found. Exiting without scraping.
+No urls found.
+***Getting urls of : broadway ***
+***Getting urls of : off-broadway ***
+***Getting urls of : school-edition ***
+***Getting urls of : young-audience ***
+***Getting urls of : young-part ***
+***Getting urls of : younger-part ***
+***Getting urls of : symphonic-experience ***
+No New Show is Added in TRW
