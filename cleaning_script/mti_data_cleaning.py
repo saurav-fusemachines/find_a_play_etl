@@ -4,6 +4,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as f
 from pyspark.sql.types import *
 import pandas as pd
+import os
 
 def cast_size_clean(df):
     mti_cleaning_df = df.withColumn("size_category", f.regexp_extract("cast_size", r"\((.*?)\)", 1)) \
@@ -120,29 +121,44 @@ def mti_data_cleaning_main(mti_raw_data):
 
     mti_cleaned_df = mti_cleaned_df.drop("CharacterGenderCount", "parsed_characters")
 
-    remove_duplicates_udf = f.udf(remove_duplicates, ArrayType(StringType()))
+    # remove_duplicates_udf = f.udf(remove_duplicates, ArrayType(StringType()))
 
-    tags_split_df = mti_cleaned_df.withColumn("tags_array", f.split(f.regexp_replace(f.col("tags"), "[\\[\\]']", ""), ", "))
+    # tags_split_df = mti_cleaned_df.withColumn("tags_array", f.split(f.regexp_replace(f.col("tags"), "[\\[\\]']", ""), ", "))
 
-    mti_final_cleaned_df = tags_split_df.withColumn("tags", remove_duplicates_udf("tags_array"))
+    # mti_final_cleaned_df = tags_split_df.withColumn("tags", remove_duplicates_udf("tags_array"))
 
-    mti_final_cleaned_df = mti_final_cleaned_df.drop("tags_array")
+    # mti_final_cleaned_df = mti_final_cleaned_df.drop("tags_array")
 
     return mti_cleaned_df
 
-if __name__ == "__main__":
+def rename_parquet_files(directory, new_name):
+    for filename in os.listdir(directory):
+        if filename.endswith('.parquet'):
+            old_path = os.path.join(directory, filename)
+            new_path = os.path.join(directory, new_name)
+            os.rename(old_path, new_path)
+
+def delete_files_except(directory, filename_to_keep):
+    for filename in os.listdir(directory):
+        if filename != filename_to_keep:
+            file_path = os.path.join(directory, filename)
+            os.remove(file_path)
+
+def cleaning_script_main():
     spark = SparkSession.builder.appName("mti-data-cleaning").getOrCreate()
-    mti_raw_data = spark.read.parquet("/home/fm-pc-lt-302/find_a_play_etl/data/raw_data/mti/mti_raw_data.csv")
+    mti_raw_data = spark.read.parquet("/home/fm-pc-lt-302/find_a_play_etl/data/raw_data/mti/mti_raw_data_v2.parquet")
     mti_clean_data = mti_data_cleaning_main(mti_raw_data)
     try:
         print("Writing data in parquet format")
-        mti_clean_data.coalesce(1).write.parquet('../data/clean_data/test.parquet')
-    except:
-        print("could not save the data in parquet format.")
-    
-    try:
-        print("writing data in csv format.")
-        mti_clean_data.coalesce(1).write.csv('../data/clean_data/test.csv', header=True, quote='"', escape='"')
-        print("Writing data completed.")
-    except:
-        print("could not write the data in csv foramt.")
+        mti_clean_data.coalesce(1).write.parquet('/home/fm-pc-lt-302/find_a_play_etl/data/clean_data/mti/', mode='overwrite')
+    except Exception as e:
+        print("could not save the data in parquet format.", e)
+
+    directory = "/home/fm-pc-lt-302/find_a_play_etl/data/clean_data/mti"
+    new_filename = "mti_clean_data.parquet"
+
+    rename_parquet_files(directory, new_filename)
+    delete_files_except(directory, new_filename)
+
+if __name__ == "__main__":
+    cleaning_script_main()
