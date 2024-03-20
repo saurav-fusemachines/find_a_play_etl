@@ -7,6 +7,7 @@ import json
 import csv
 import os
 
+hello
 
 def scrape_and_compare(url1, url2):
     df1 = pd.read_csv(url1)
