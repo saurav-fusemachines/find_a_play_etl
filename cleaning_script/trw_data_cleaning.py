@@ -36,14 +36,15 @@ def filter_and_slice_cast_list(cast_list):
 
 def cleaning_trw_main():
     spark = SparkSession.builder.appName("trw-cleaning").getOrCreate()
-    trw_df = spark.read.format("parquet").option("header","true").option("inferSchema", "true") \
-          .option("mode", "FAILFAST").load("data/raw_data/trw/theatricalrights.parquet")
-    
-
+    trw_df = spark.read.parquet("data/raw_data/trw/scraped_data.parquet")
+    trw_df.show()
     extract_author_udf = udf(extract_author, StringType())
 
     filter_values_udf = udf(filter_and_slice_cast_list, ArrayType(StringType()))
 
+    extract_musicain_udf = udf(extract_musician,StringType())
+
+    extract_lyrician_udf = udf(extract_lyrician,StringType())
     #Extracting authors from book_and_music_by
     trw_df = trw_df.withColumn("author", extract_author_udf(col("book_and_music_by")))
 
