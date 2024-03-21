@@ -20,10 +20,10 @@ def run_tasks():
         # concurrent.futures.wait([scraping_concord, scraping_mti, scraping_trw])
 
         cleaning_mti = executor.submit(mti_cleaning)
-        # cleaning_trw = executor.submit(trw_cleaning)
+        cleaning_trw = executor.submit(trw_cleaning)
         cleaning_concord = executor.submit(concord_cleaning)
 
-        concurrent.futures.wait([cleaning_mti, cleaning_concord])
+        concurrent.futures.wait([cleaning_mti, cleaning_concord, cleaning_trw])
         
 # Run the tasks
 run_tasks()
