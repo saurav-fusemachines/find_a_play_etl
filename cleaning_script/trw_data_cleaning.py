@@ -37,7 +37,7 @@ def filter_and_slice_cast_list(cast_list):
 def cleaning_trw_main():
     spark = SparkSession.builder.appName("trw-cleaning").getOrCreate()
     trw_df = spark.read.format("parquet").option("header","true").option("inferSchema", "true") \
-          .option("mode", "FAILFAST").load("/home/fm-pc-lt-342/Documents/Fusemachines/BLG/raw_data/trw/theatricalrights.parquet")
+          .option("mode", "FAILFAST").load("data/raw_data/trw/theatricalrights.parquet")
     
 
     extract_author_udf = udf(extract_author, StringType())
@@ -77,8 +77,7 @@ def cleaning_trw_main():
 
     trw_df = trw_df.select('show_title','show_type','show_url','author','music_by','lyrics_by','male_cast','female_cast','overall_cast_number','characters','apply_for_license','show_credits','songs_list','similar_shows','upcoming_productions','resources','synopsis')
 
-    trw_df.write.format("parquet").mode("overwrite")\
-                .save(".parquet")
+    trw_df.coalesce(1).write.parquet('data/clean_data/trw/', mode='overwrite')
     
 if __name__ == "__main__":
     cleaning_trw_main()
