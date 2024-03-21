@@ -88,7 +88,7 @@ def cleaning_script_main():
         print("could not save the data in parquet format.", e)
 
     directory = "/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/clean_data/concord"
-    new_filename = "mti_clean_data.parquet"
+    new_filename = "concord_clean_data.parquet"
 
     rename_parquet_files(directory, new_filename)
     delete_files_except(directory, new_filename)
