@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/pipeline.py", line 2, in <module>
+    from scraping_script.concord import start_concord
+  File "/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/scraping_script/concord.py", line 8, in <module>
+    import findspark
+ModuleNotFoundError: No module named 'findspark'

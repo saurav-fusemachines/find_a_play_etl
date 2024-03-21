@@ -1,1 +1,4 @@
 .env
+__pycache__
+cleaning_script/__pycache__
+scraping_script/__pycache__
