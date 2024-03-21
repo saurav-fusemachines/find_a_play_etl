@@ -1,3 +1,5 @@
+import findspark
+findspark.init()
 import os
 import pandas as pd
 from pyspark.sql import SparkSession
@@ -79,15 +81,15 @@ def delete_files_except(directory, filename_to_keep):
 
 def cleaning_script_main():
     spark = SparkSession.builder.appName("concord-data-cleaning").getOrCreate()
-    concord_raw_data = spark.read.parquet("/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/concord/scraped_data.parquet")
+    concord_raw_data = spark.read.parquet("data/raw_data/concord/scraped_data.parquet")
     concord_clean_data = concord_cleaning(concord_raw_data)
     try:
         print("Writing data in parquet format")
-        concord_clean_data.coalesce(1).write.parquet('/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/clean_data/concord/', mode='overwrite')
+        concord_clean_data.coalesce(1).write.parquet('data/clean_data/concord/', mode='overwrite')
     except Exception as e:
         print("could not save the data in parquet format.", e)
 
-    directory = "/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/clean_data/concord"
+    directory = "data/clean_data/concord"
     new_filename = "concord_clean_data.parquet"
 
     rename_parquet_files(directory, new_filename)
