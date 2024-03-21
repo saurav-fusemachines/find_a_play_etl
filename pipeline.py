@@ -4,6 +4,7 @@ from scraping_script.mti_scraping import start_mti
 from scraping_script.trw import start_trw
 from cleaning_script.mti_data_cleaning import cleaning_script_main as mti_cleaning
 from cleaning_script.trw_data_cleaning import cleaning_trw_main as trw_cleaning
+from cleaning_script.concord_cleaning import cleaning_script_main as concord_cleaning
 # task1 = start_concord()
 # task2 = start_mti()
 # task3 = start_trw()
@@ -20,8 +21,9 @@ def run_tasks():
 
         cleaning_mti = executor.submit(mti_cleaning)
         cleaning_trw = executor.submit(trw_cleaning)
+        cleaning_concord = executor.submit(concord_cleaning)
 
-        concurrent.futures.wait([cleaning_mti, cleaning_trw])
-
+        concurrent.futures.wait([cleaning_mti, cleaning_trw, cleaning_concord])
+        
 # Run the tasks
 run_tasks()
