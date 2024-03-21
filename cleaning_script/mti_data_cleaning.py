@@ -121,13 +121,17 @@ def mti_data_cleaning_main(mti_raw_data):
 
     mti_cleaned_df = mti_cleaned_df.drop("CharacterGenderCount", "parsed_characters")
 
-    # remove_duplicates_udf = f.udf(remove_duplicates, ArrayType(StringType()))
+    remove_duplicates_udf = f.udf(remove_duplicates, ArrayType(StringType()))
 
-    # tags_split_df = mti_cleaned_df.withColumn("tags_array", f.split(f.regexp_replace(f.col("tags"), "[\\[\\]']", ""), ", "))
+    tags_split_df = mti_cleaned_df.withColumn("tags_array", f.split(f.regexp_replace(f.col("tags"), "[\\[\\]']", ""), ", "))
 
-    # mti_final_cleaned_df = tags_split_df.withColumn("tags", remove_duplicates_udf("tags_array"))
+    mti_final_cleaned_df = tags_split_df.withColumn("tags", remove_duplicates_udf("tags_array"))
 
-    # mti_final_cleaned_df = mti_final_cleaned_df.drop("tags_array")
+    mti_final_cleaned_df = mti_final_cleaned_df.drop("tags_array")
+
+    mti_final_cleaned_df = mti_final_cleaned_df.withColumn("tags_str", f.concat(f.lit("["), f.concat_ws(", ", "tags"), f.lit("]")))
+
+    mti_cleaned_df = mti_final_cleaned_df.drop("tags")
 
     return mti_cleaned_df
 
