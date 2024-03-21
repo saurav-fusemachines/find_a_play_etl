@@ -330,7 +330,7 @@ def filter_new_shows_only(df_left, df_right, join_col):
 def start_trw():
     filters = ['broadway','off-broadway','school-edition','young-audience','young-part','younger-part','symphonic-experience']
 
-    dir = r'/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/trw/'
+    dir = r'data/raw_data/trw/'
     directory = os.path.dirname(dir)
 
     if not os.path.exists(directory):
@@ -378,14 +378,14 @@ def start_trw():
             print(f"{itetration_count}: Scraping Completed for {row['url']}")
         
         df_v2 = pd.concat(all_data,ignore_index=True)
-        scrapped_data_dir = '/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/trw/scraped_data.csv'
+        scrapped_data_dir = 'data/raw_data/trw/scraped_data.csv'
 
         if not os.path.isfile(scrapped_data_dir):
-                df_v2.to_csv('/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/trw/scraped_data.csv',mode='w', index=False)
+                df_v2.to_csv('data/raw_data/trw/scraped_data.csv',mode='w', index=False)
                 print("Write Scrapped")
 
         else:
-            df_v2.to_csv('/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/trw/trw.csv',mode='a',header=False, index=False)
+            df_v2.to_csv('data/raw_data/trw/trw.csv',mode='a',header=False, index=False)
                 
             print("Scrapped append")
 

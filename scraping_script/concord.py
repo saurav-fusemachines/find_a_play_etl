@@ -5,8 +5,9 @@ import requests
 import pandas as pd
 from logger import setup_logger
 from bs4 import BeautifulSoup
+import findspark
+findspark.init()
 from pyspark.sql import SparkSession
-
 # Initialize Spark
 spark = SparkSession.builder.appName("concord_scraping_script").getOrCreate()
 
@@ -214,7 +215,7 @@ def start_concord():
 
 
     # dir = r'../data/raw_data/concord/'
-    dir = r'/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/concord/'
+    dir = r'data/raw_data/concord/'
     directory = os.path.dirname(dir)
 
     if not os.path.exists(directory):
@@ -297,17 +298,17 @@ def start_concord():
         final_df = final_df.toPandas()
 
         # scrapped_data_dir = '../data/raw_data/concord/scraped_data.csv'
-        scrapped_data_dir = '/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/concord/scraped_data.csv'
+        scrapped_data_dir = 'data/raw_data/concord/scraped_data.csv'
 
         if not os.path.isfile(scrapped_data_dir):
             # final_df.to_csv('../data/raw_data/concord/scraped_data.csv',mode='w', index=False)
-            final_df.to_csv('/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/concord/scraped_data.csv',mode='w', index=False)
+            final_df.to_csv('data/raw_data/concord/scraped_data.csv',mode='w', index=False)
 
             print("Write Scrapped")
 
         else:
             # final_df.to_csv('../data/raw_data/concord/scraped_data.csv',mode='a',header=False, index=False)
-            final_df.to_csv('/home/fm-pc-lt-342/Documents/Fusemachines/Broadway_Licensing_Group/data/raw_data/concord/scraped_data.csv',mode='a',header=False, index=False)
+            final_df.to_csv('data/raw_data/concord/scraped_data.csv',mode='a',header=False, index=False)
             
             print("Scrapped append")
         
