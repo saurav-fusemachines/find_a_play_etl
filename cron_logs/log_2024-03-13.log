@@ -1,8 +1,0 @@
-24/03/13 18:05:02 WARN Utils: Your hostname, FM-PC-LT-342 resolves to a loopback address: 127.0.1.1; using 192.168.1.18 instead (on interface wlp0s20f3)
-24/03/13 18:05:02 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-24/03/13 18:05:02 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Directory exists: True
-No new URLs found. Exiting without scraping.
-No urls found.
